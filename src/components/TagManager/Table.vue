@@ -61,13 +61,13 @@
 
                 <td><span class="rectangle" v-bind:style="{ backgroundColor: entry.color }">{{entry.tagName}}</span></td>
 
-                <td v-bind:class="{ 'light' : !entry.taggedItems }">{{entry.taggedItems ? entry.taggedItems + ' Emails' : 'No Emails'}}</td>
+                <td v-bind:class="{ 'light' : !entry.taggedItems }">{{entry.taggedItems | emails }}</td>
 
-                <td v-bind:class="{ 'bold': entry.assignedTo, 'light': !entry.assignedTo }">{{entry.assignedTo ? entry.assignedTo : 'Not Set'}}</td>
+                <td v-bind:class="{ 'bold': entry.assignedTo, 'light': !entry.assignedTo }">{{entry.assignedTo | isSet }}</td>
 
-                <td v-bind:class="{ 'light': !entry.expungeDate }">{{entry.expungeDate ? entry.expungeDate : 'Not Set'}}</td>
+                <td v-bind:class="{ 'light': !entry.expungeDate }">{{entry.expungeDate | isSet }}</td>
 
-                <td v-bind:class="{ 'bold': entry.options, 'light': !entry.options }">{{entry.options ? entry.options : 'Not Set'}}</td>
+                <td v-bind:class="{ 'bold': entry.options, 'light': !entry.options }">{{entry.options | isSet }}</td>
 
                 <td>{{entry.dateCreated}}</td>
 
@@ -112,6 +112,16 @@
             };
         },
 
+        filters: {
+            isSet: value => {
+                return value ? value : 'Not Set';
+            },
+
+            emails: value => {
+                return value ? value + ' Emails' : 'No Emails';
+            },
+        },
+
         watch: {
 
             entries(newValue) {
@@ -137,6 +147,7 @@
 
             updateColor(e, entry) {
                 entry.color = e;
+                entry.update();
             },
 
             isChecked(id) {

@@ -43,6 +43,8 @@
     import Pagination from '@/components/Shared/Pagination';
     import ModalDelete from '@/components/Shared/ModalDelete';
     import Helpers from '@/helpers';
+    import RandomTagFactory from '@/factories/RandomTagFactory';
+    import { mapState, mapGetters } from 'vuex';
 
     export default {
 
@@ -57,7 +59,6 @@
         data() {
 
             return {
-                tags: [],
                 checkedIds: [],
                 idsToDelete: [],
                 paginatedTags: [],
@@ -65,155 +66,35 @@
                   perPage: 10,
                   page: 1,
                 },
-                tags:[
-                    {
-                        id: 1,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 0,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 24, 2020',
-                        options: '',
-                        dateCreated: 'Nov 26, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 2,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 18,
-                        assignedTo: '',
-                        expungeDate: '',
-                        options: 'Notifies',
-                        dateCreated: 'Nov 23, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 3,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 22,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 22, 2020',
-                        options: '2 Rules',
-                        dateCreated: 'Nov 29, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 4,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 22,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 22, 2020',
-                        options: '2 Rules',
-                        dateCreated: 'Nov 29, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 5,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 22,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 22, 2020',
-                        options: '2 Rules',
-                        dateCreated: 'Nov 29, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 6,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 22,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 22, 2020',
-                        options: '2 Rules',
-                        dateCreated: 'Nov 29, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 7,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 22,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 22, 2020',
-                        options: '2 Rules',
-                        dateCreated: 'Nov 29, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 8,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 22,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 22, 2020',
-                        options: '2 Rules',
-                        dateCreated: 'Nov 29, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 9,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 22,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 22, 2020',
-                        options: '2 Rules',
-                        dateCreated: 'Nov 29, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 10,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 22,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 22, 2020',
-                        options: '2 Rules',
-                        dateCreated: 'Nov 29, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 11,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 22,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 22, 2020',
-                        options: '2 Rules',
-                        dateCreated: 'Nov 29, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                    {
-                        id: 12,
-                        color: '#CF202E',
-                        tagName: 'REVIEW',
-                        taggedItems: 22,
-                        assignedTo: 'Marko M',
-                        expungeDate: 'Nov 22, 2020',
-                        options: '2 Rules',
-                        dateCreated: 'Nov 29, 2017',
-                        createdBy: 'Marko A',
-                    },
-
-                ],
             };
 
         },
+
+        computed: {
+
+            ...mapState({
+                tags: state => state.tags.tags,
+            }),
+
+            ...mapGetters({
+                findTagById: 'tags/findById',
+            }),
+
+        },
+
+        created() {
+
+            let factory = new RandomTagFactory();
+            let numTags = 12;
+
+            for(let i = 0; i < numTags; i++) {
+
+                let tag = factory.createRandomTag(i);
+                tag.create();
+            }
+
+        },
+
         methods: {
 
             onDeleteClicked() {
@@ -231,11 +112,11 @@
             },
 
             deleteTags() {
-                let t = this.tags.filter(tag => {
-                    return this.idsToDelete.indexOf(tag.id) === -1;
+                this.idsToDelete.forEach(id => {
+                    let tag = this.findTagById(id);
+                    tag.destroy();
                 });
 
-                this.tags = t;
                 this.paginatedTags = Helpers.paginate(this.tags, this.paginationOptions);
             },
 
