@@ -1,5 +1,15 @@
 @import "varibles";
 
+@font-face {
+  font-family: GillSansLight;
+  src: url('~@/assets/fonts/Gill Sans Light.woff');
+}
+
+@font-face {
+  font-family: GillSansMedium;
+  src: url('~@/assets/fonts/Gill Sans Medium.woff');
+}
+
 * {
   box-sizing: border-box;
 }
@@ -41,25 +51,27 @@ html, body {
     }
 
     .text {
+      font-family: GillSansLight;
+      font-size: 16px;
       letter-spacing: 2.31px;
       margin-top: 3px;
       position: relative;
 
       em {
+        font-family: GillSansMedium;
         font-style: normal;
-        font-weight: bold;
       }
 
       .cloud {
         color: #00A88D;
-        font-family: GillSans;
+        font-family: GillSansMedium;
         font-size: 10px;
-        font-weight: 600;
         letter-spacing: 1.93px;
         line-height: 12px;
-        position: absolute;
+        margin-left: 2px;
+        position: relative;
         text-align: left;
-        top: 3px;
+        top: -4px;
         text-transform: uppercase;
       }
     }

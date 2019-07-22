@@ -5,7 +5,7 @@ export const create = ({ commit }, data) => {
 };
 
 export const update = ({ commit }, data) => {
-    commit('UPDATE', { data, getters });
+    commit('UPDATE', data);
 };
 
 export const destroy = ({ commit }, data ) => {

@@ -6,7 +6,7 @@
 
             <img src="@/assets/images/logo-green copy.png"></img>
 
-            <div class="text">JAT<em>HEON</em> <span class="cloud">&nbsp; cloud</span></div>
+            <div class="text">JAT<em>HEON</em> <span class="cloud">cloud</span></div>
 
         </div>
 
