@@ -46,41 +46,41 @@
 </template>
 
 <script>
-    export default {
+export default {
 
-        props: {
-          title: {
-              type: String,
-              default: 'Delete'
-          }
-        },
+  props: {
+    title: {
+      type: String,
+      default: 'Delete',
+    },
+  },
 
-        data() {
-            return {
-                showModal: false,
-            };
-        },
+  data() {
+    return {
+      showModal: false,
+    };
+  },
 
-        methods: {
+  methods: {
 
-            show() {
-                this.showModal = true;
-            },
+    show() {
+      this.showModal = true;
+    },
 
-            hide() {
-                this.showModal = false;
-            },
+    hide() {
+      this.showModal = false;
+    },
 
-            cancel() {
-                this.$emit('cancel');
-                this.showModal = false;
-            },
+    cancel() {
+      this.$emit('cancel');
+      this.showModal = false;
+    },
 
-            confirm() {
-                this.$emit('confirm');
-                this.showModal = false;
-            },
+    confirm() {
+      this.$emit('confirm');
+      this.showModal = false;
+    },
 
-        }
-    }
+  },
+};
 </script>

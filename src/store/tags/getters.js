@@ -1,18 +1,14 @@
 export default {
 
-    findById: (state) => (id) => {
+  findById: state => (id) => {
+    let tag = null;
 
-        var tag = null;
+    state.tags.forEach((t) => {
+      if (t.id == id) {
+        tag = t;
+      }
+    });
 
-        state.tags.forEach((t) => {
-
-            if (t.id == id) {
-
-                tag = t;
-            }
-
-        });
-
-        return tag;
-    },
+    return tag;
+  },
 };

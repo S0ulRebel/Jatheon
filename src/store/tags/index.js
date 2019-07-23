@@ -5,9 +5,9 @@ import state from './state';
 
 
 export default {
-    namespaced: true,
-    actions,
-    getters,
-    mutations,
-    state
+  namespaced: true,
+  actions,
+  getters,
+  mutations,
+  state,
 };

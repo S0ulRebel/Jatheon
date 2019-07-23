@@ -1,76 +1,72 @@
-import Tag from '@/classes/Tag';
 import moment from 'moment';
+import Tag from '@/classes/Tag';
 
 export default class RandomTagFactory {
+  createRandomTag(num) {
+    const colors = [
+      '#CF202E',
+      '#A41E36',
+      '#67C8C7',
+      '#00A88D',
+      '#006F63',
+      '#C1D42F',
+      '#3DBCE7',
+      '#FC9543',
+      '#FFE105',
+      '#000000',
+    ];
 
-    createRandomTag(num) {
+    const tagNames = [
+      'REVIEW',
+      'ASSIGNED',
+      'SOMETHING',
+      'LEGAL',
+      'CUSTOM TAG',
+    ];
 
-        let colors = [
-            '#CF202E',
-            '#A41E36',
-            '#67C8C7',
-            '#00A88D',
-            '#006F63',
-            '#C1D42F',
-            '#3DBCE7',
-            '#FC9543',
-            '#FFE105',
-            '#000000',
-        ];
+    const names = [
+      '',
+      'Marko M',
+      'Alexander S',
+    ];
 
-        let tagNames = [
-            'REVIEW',
-            'ASSIGNED',
-            'SOMETHING',
-            'LEGAL',
-            'CUSTOM TAG',
-        ];
+    const optiosList = [
+      'Notifies',
+      '',
+      '2 Rules',
+    ];
 
-        let names = [
-            '',
-            'Marko M',
-            'Alexander S',
-        ];
+    const id = num;
 
-        let optiosList = [
-            'Notifies',
-            '',
-            '2 Rules',
-        ];
+    const color = colors[Math.floor(Math.random() * colors.length)];
 
-        let id = num;
+    const tagName = tagNames[Math.floor(Math.random() * tagNames.length)];
 
-        let color = colors[Math.floor(Math.random() * colors.length)];
+    let taggedItems = Math.floor(Math.random() * 100);
+    if (taggedItems > 50) taggedItems = 0;
 
-        let tagName = tagNames[Math.floor(Math.random() * tagNames.length)];
+    const assignedTo = names[Math.floor(Math.random() * names.length)];
 
-        let taggedItems = Math.floor(Math.random() * 100);
-        if (taggedItems > 50) taggedItems = 0;
+    const expungeDate = moment(new Date(+(new Date()) + Math.floor(Math.random() * 10000000000)))
+      .format('MMM DD, YYYY');
 
-        let assignedTo = names[Math.floor(Math.random() * names.length)];
+    const options = optiosList[Math.floor(Math.random() * optiosList.length)];
 
-        let expungeDate = moment(new Date(+(new Date()) + Math.floor(Math.random()*10000000000)))
-            .format('MMM DD, YYYY');
+    const dateCreated = moment(new Date(+(new Date()) - Math.floor(Math.random() * 10000000000)))
+      .format('MMM DD, YYYY');
 
-        let options = optiosList[Math.floor(Math.random() * optiosList.length)];
+    const createdBy = 'Marko A';
 
-        let dateCreated = moment(new Date(+(new Date()) - Math.floor(Math.random()*10000000000)))
-            .format('MMM DD, YYYY');
-
-        let createdBy =   'Marko A';
-
-        return new Tag(
-            id,
-            color,
-            tagName,
-            taggedItems,
-            assignedTo,
-            expungeDate,
-            options,
-            dateCreated,
-            createdBy
-        );
-
-    }
-
+    return new Tag(
+      id,
+      color,
+      tagName,
+      taggedItems,
+      assignedTo,
+      expungeDate,
+      options,
+      dateCreated,
+      createdBy,
+    );
+  }
 }

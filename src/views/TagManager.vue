@@ -37,95 +37,92 @@
 </template>
 
 <script>
-    import Sidebar from '@/components/Shared/Sidebar';
-    import Search from '@/components/Shared/Search';
-    import TagManagerTable from '@/components/TagManager/Table';
-    import Pagination from '@/components/Shared/Pagination';
-    import ModalDelete from '@/components/Shared/ModalDelete';
-    import Helpers from '@/helpers';
-    import RandomTagFactory from '@/factories/RandomTagFactory';
-    import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
+import Sidebar from '@/components/Shared/Sidebar';
+import Search from '@/components/Shared/Search';
+import TagManagerTable from '@/components/TagManager/Table';
+import Pagination from '@/components/Shared/Pagination';
+import ModalDelete from '@/components/Shared/ModalDelete';
+import Helpers from '@/helpers';
+import RandomTagFactory from '@/factories/RandomTagFactory';
 
-    export default {
+export default {
 
-        components: {
-            Sidebar,
-            Search,
-            TagManagerTable,
-            Pagination,
-            ModalDelete
-        },
+  components: {
+    Sidebar,
+    Search,
+    TagManagerTable,
+    Pagination,
+    ModalDelete,
+  },
 
-        data() {
-
-            return {
-                checkedIds: [],
-                idsToDelete: [],
-                paginatedTags: [],
-                paginationOptions: {
-                  perPage: 10,
-                  page: 1,
-                },
-            };
-
-        },
-
-        computed: {
-
-            ...mapState({
-                tags: state => state.tags.tags,
-            }),
-
-            ...mapGetters({
-                findTagById: 'tags/findById',
-            }),
-
-        },
-
-        created() {
-
-            let factory = new RandomTagFactory();
-            let numTags = 12;
-
-            for(let i = 0; i < numTags; i++) {
-
-                let tag = factory.createRandomTag(i);
-                tag.create();
-            }
-
-        },
-
-        methods: {
-
-            onDeleteClicked() {
-                this.idsToDelete = this.checkedIds;
-                this.$refs.deleteModal.show();
-            },
-
-            onTableRowDelete(e) {
-                this.idsToDelete = [e];
-                this.$refs.deleteModal.show();
-            },
-
-            updateCheckedIds(e) {
-                this.checkedIds = e;
-            },
-
-            deleteTags() {
-                this.idsToDelete.forEach(id => {
-                    let tag = this.findTagById(id);
-                    tag.destroy();
-                });
-
-                this.paginatedTags = Helpers.paginate(this.tags, this.paginationOptions);
-            },
-
-            onPaginationUpdate(e) {
-                this.paginationOptions = e;
-                this.paginatedTags = Helpers.paginate(this.tags, this.paginationOptions);
-            },
-
-        },
-
+  data() {
+    return {
+      checkedIds: [],
+      idsToDelete: [],
+      paginatedTags: [],
+      paginationOptions: {
+        perPage: 10,
+        page: 1,
+      },
     };
+  },
+
+  computed: {
+
+    ...mapState({
+      tags: state => state.tags.tags,
+    }),
+
+    ...mapGetters({
+      findTagById: 'tags/findById',
+    }),
+
+  },
+
+  created() {
+    const factory = new RandomTagFactory();
+    const numTags = 12;
+
+    for (let i = 0; i < numTags; i++) {
+      const tag = factory.createRandomTag(i);
+      tag.create();
+    }
+  },
+
+  methods: {
+
+    onDeleteClicked() {
+      this.idsToDelete = this.checkedIds;
+      this.$refs.deleteModal.show();
+    },
+
+    onTableRowDelete(e) {
+      this.idsToDelete = [e];
+      this.$refs.deleteModal.show();
+    },
+
+    updateCheckedIds(e) {
+      this.checkedIds = e;
+    },
+
+    deleteTags() {
+
+      this.idsToDelete.forEach((id) => {
+        const tag = this.findTagById(id);
+        tag.destroy();
+      });
+
+      this.$refs.tagManagerTable.deselectAll();
+      this.paginatedTags = Helpers.paginate(this.tags, this.paginationOptions);
+    },
+
+    onPaginationUpdate(e) {
+      this.paginationOptions = e;
+      this.paginatedTags = Helpers.paginate(this.tags, this.paginationOptions);
+    },
+
+  },
+
+};
 </script>

@@ -64,11 +64,11 @@
 </template>
 
 <script>
-    export default {
-        computed: {
-            pageName() {
-                return this.$route.name;
-            }
-        }
-    }
+export default {
+  computed: {
+    pageName() {
+      return this.$route.name;
+    },
+  },
+};
 </script>

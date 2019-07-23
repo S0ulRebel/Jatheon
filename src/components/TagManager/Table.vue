@@ -86,97 +86,90 @@
 </template>
 
 <script>
-    import Checkbox from '@/components/Shared/Checkbox';
-    import ColorPicker from './ColorPicker';
-    import moment from 'moment'
+import moment from 'moment';
+import Checkbox from '@/components/Shared/Checkbox';
+import ColorPicker from './ColorPicker';
 
-    export default {
+export default {
 
-        components: {
-            Checkbox,
-            ColorPicker
-        },
+  components: {
+    Checkbox,
+    ColorPicker,
+  },
 
-        props: {
-            entries: {
-                type: Array,
-                default: [],
-            }
-        },
+  props: {
+    entries: {
+      type: Array,
+      default: [],
+    },
+  },
 
-        data() {
-            return {
-                reverseSortDirection: false,
-                checkedIds: [],
-                sortedEntries: [],
-            };
-        },
-
-        filters: {
-            isSet: value => {
-                return value ? value : 'Not Set';
-            },
-
-            emails: value => {
-                return value ? value + ' Emails' : 'No Emails';
-            },
-        },
-
-        watch: {
-
-            entries(newValue) {
-                this.initList();
-            },
-
-            checkedIds(newValue) {
-                this.$emit('checkedUpdate', this.checkedIds);
-            },
-        },
-
-        created() {
-            this.initList();
-        },
-
-        methods: {
-
-            initList() {
-                this.sortedEntries = this.entries.map(entry => {
-                    return entry;
-                });
-            },
-
-            updateColor(e, entry) {
-                entry.color = e;
-                entry.update();
-            },
-
-            isChecked(id) {
-                return this.checkedIds.indexOf(id) > -1;
-            },
-
-            toggleCheckbox(e) {
-                let index = this.checkedIds.indexOf(e.value);
-                index > -1 ? this.checkedIds.splice(index, 1) : this.checkedIds.push(e.value);
-            },
-
-            deselectAll() {
-                this.checkedIds = [];
-            },
-
-            sortByDateCreated() {
-                this.sortedEntries = this.entries.sort((a,b) => {
-                    let m1 = moment(a.dateCreated).unix();
-                    let m2 = moment(b.dateCreated).unix();
-
-                    return this.reverseSortDirection ? m2 - m1 : m1 - m2;
-
-                });
-                this.reverseSortDirection = !this.reverseSortDirection;
-            },
-
-            onRowDelete(id) {
-                this.$emit('rowDelete', id);
-            }
-        }
+  data() {
+    return {
+      reverseSortDirection: false,
+      checkedIds: [],
+      sortedEntries: [],
     };
+  },
+
+  filters: {
+    isSet: value => (value || 'Not Set'),
+
+    emails: value => (value ? `${value} Emails` : 'No Emails'),
+  },
+
+  watch: {
+
+    entries(newValue) {
+      this.initList();
+    },
+
+    checkedIds(newValue) {
+      this.$emit('checkedUpdate', this.checkedIds);
+    },
+  },
+
+  created() {
+    this.initList();
+  },
+
+  methods: {
+
+    initList() {
+      this.sortedEntries = this.entries.map(entry => entry);
+    },
+
+    updateColor(e, entry) {
+      entry.color = e;
+      entry.update();
+    },
+
+    isChecked(id) {
+      return this.checkedIds.indexOf(id) > -1;
+    },
+
+    toggleCheckbox(e) {
+      const index = this.checkedIds.indexOf(e.value);
+      index > -1 ? this.checkedIds.splice(index, 1) : this.checkedIds.push(e.value);
+    },
+
+    deselectAll() {
+      this.checkedIds = [];
+    },
+
+    sortByDateCreated() {
+      this.sortedEntries = this.entries.sort((a, b) => {
+        const m1 = moment(a.dateCreated).unix();
+        const m2 = moment(b.dateCreated).unix();
+
+        return this.reverseSortDirection ? m2 - m1 : m1 - m2;
+      });
+      this.reverseSortDirection = !this.reverseSortDirection;
+    },
+
+    onRowDelete(id) {
+      this.$emit('rowDelete', id);
+    },
+  },
+};
 </script>

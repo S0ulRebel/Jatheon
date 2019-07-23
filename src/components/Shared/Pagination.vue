@@ -53,72 +53,72 @@
 </template>
 
 <script>
-    export default {
+export default {
 
-        props: {
-            numEntries: {
-                type: Number,
-                default: 0,
-            }
-        },
+  props: {
+    numEntries: {
+      type: Number,
+      default: 0,
+    },
+  },
 
-        data() {
-            return {
-                perPage: 10,
-                page: 1,
-            };
-        },
-
-        computed: {
-
-            numPages() {
-                return Math.ceil(this.numEntries / this.perPage);
-            },
-
-            isFirstPage() {
-                return this.page === 1;
-            },
-
-            isLastPage() {
-                return this.page === this.numPages;
-            },
-
-        },
-
-        watch: {
-
-            perPage() {
-                this.$emit('update', { perPage: this.perPage, page : this.page });
-            },
-
-            page() {
-                this.$emit('update', { perPage: this.perPage, page : this.page });
-            },
-
-        },
-
-        created() {
-            this.$emit('update', { perPage: this.perPage, page : this.page });
-        },
-
-        methods: {
-
-            goToFirstPage() {
-                this.page = 1;
-            },
-
-            goToLastPage() {
-                this.page = this.numPages;
-            },
-
-            next() {
-                this.page++;
-            },
-
-            back() {
-                this.page--;
-            },
-
-        },
+  data() {
+    return {
+      perPage: 10,
+      page: 1,
     };
+  },
+
+  computed: {
+
+    numPages() {
+      return Math.ceil(this.numEntries / this.perPage);
+    },
+
+    isFirstPage() {
+      return this.page === 1;
+    },
+
+    isLastPage() {
+      return this.page === this.numPages;
+    },
+
+  },
+
+  watch: {
+
+    perPage() {
+      this.$emit('update', { perPage: this.perPage, page: this.page });
+    },
+
+    page() {
+      this.$emit('update', { perPage: this.perPage, page: this.page });
+    },
+
+  },
+
+  created() {
+    this.$emit('update', { perPage: this.perPage, page: this.page });
+  },
+
+  methods: {
+
+    goToFirstPage() {
+      this.page = 1;
+    },
+
+    goToLastPage() {
+      this.page = this.numPages;
+    },
+
+    next() {
+      this.page++;
+    },
+
+    back() {
+      this.page--;
+    },
+
+  },
+};
 </script>

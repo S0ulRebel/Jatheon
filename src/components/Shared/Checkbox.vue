@@ -9,46 +9,44 @@
 </template>
 
 <script>
-    export default {
+export default {
 
-        props: {
-            checked:{
-                type: Boolean,
-                default: false,
-            },
-            value: {
-                type: [Boolean, String, Number],
-            }
-        },
+  props: {
+    checked: {
+      type: Boolean,
+      default: false,
+    },
+    value: {
+      type: [Boolean, String, Number],
+    },
+  },
 
-        data() {
-
-            return {
-                isChecked: false,
-            };
-
-        },
-
-        watch: {
-            checked(newValue) {
-                this.isChecked = newValue;
-            },
-        },
-
-        created() {
-          this.isChecked = this.checked;
-        },
-
-        methods: {
-
-            toggleCheckbox() {
-                this.isChecked = !this.isChecked;
-                this.$emit('toggle', {
-                    value: this.value,
-                })
-            }
-
-        }
-
+  data() {
+    return {
+      isChecked: false,
     };
+  },
+
+  watch: {
+    checked(newValue) {
+      this.isChecked = newValue;
+    },
+  },
+
+  created() {
+    this.isChecked = this.checked;
+  },
+
+  methods: {
+
+    toggleCheckbox() {
+      this.isChecked = !this.isChecked;
+      this.$emit('toggle', {
+        value: this.value,
+      });
+    },
+
+  },
+
+};
 </script>
